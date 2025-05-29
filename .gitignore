@@ -1,0 +1,26 @@
+
+# NetBeans-specific folders
+nbproject/private/
+build/
+dist/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# JAR/WAR/EAR packages
+*.jar
+*.war
+*.ear
+
+# Backup files
+*~
+
+# OS-generated files
+.DS_Store
+Thumbs.db
