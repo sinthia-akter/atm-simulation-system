@@ -12,7 +12,7 @@ public class SavingsAccount extends Account implements ATMOperations {
     @Override
     public void validatePIN(String pin) {
         if (!pin.equals(correctPIN)) {
-            throw new InvalidPINException("Invalid PIN entered!");
+            JOptionPane.showMessageDialog(null, "Invalid PIN entered!", "PIN Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -23,15 +23,26 @@ public class SavingsAccount extends Account implements ATMOperations {
 
     @Override
     public void deposit(int amount) {
+        if (amount <= 0) {
+            JOptionPane.showMessageDialog(null, "Deposit amount must be positive!", "Input Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         balance += amount;
         JOptionPane.showMessageDialog(null, "Deposited $" + amount);
     }
 
     @Override
     public void withdraw(int amount) {
-        if (amount > balance) {
-            throw new InsufficientFundsException("Insufficient balance!");
+        if (amount <= 0) {
+            JOptionPane.showMessageDialog(null, "Withdrawal amount must be positive!", "Input Error", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        if (amount > balance) {
+            JOptionPane.showMessageDialog(null, "Insufficient balance!", "Balance Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         balance -= amount;
         JOptionPane.showMessageDialog(null, "Withdrawn $" + amount);
     }

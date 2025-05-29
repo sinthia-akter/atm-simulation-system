@@ -10,7 +10,7 @@ public class ATMSystem extends JFrame implements ActionListener {
     private final SavingsAccount account;
 
     public ATMSystem() {
-        account = new SavingsAccount("ACC12345", 0);
+        account = new SavingsAccount("ACC1234", 0); 
 
         setTitle("ATM Login");
         setSize(350, 200);
@@ -19,11 +19,11 @@ public class ATMSystem extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
 
         JLabel pinLabel = new JLabel("Enter PIN:");
-        pinLabel.setBounds(50, 40, 100, 25);
+        pinLabel.setBounds(50, 45, 100, 25);
         add(pinLabel);
 
         pinField = new JPasswordField();
-        pinField.setBounds(120, 40, 150, 25);
+        pinField.setBounds(120, 45, 150, 25);
         add(pinField);
 
         loginBtn = new JButton("Login");
@@ -37,12 +37,12 @@ public class ATMSystem extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String pin = String.valueOf(pinField.getPassword());
-        try {
-            account.validatePIN(pin);
+
+        if (pin.equals("1234")) {
             this.dispose(); 
-            new Menu(account);
-        } catch (InvalidPINException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "PIN Error", JOptionPane.ERROR_MESSAGE);
+            new Menu(account); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid PIN!", "PIN Error", JOptionPane.ERROR_MESSAGE);
             pinField.setText("");
         }
     }

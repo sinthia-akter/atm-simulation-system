@@ -5,72 +5,68 @@ import java.awt.event.*;
 
 public class Menu extends JFrame implements ActionListener {
     private final JTextField amountField;
-    private final JButton checkButton;
-    private final JButton depositButton;
-    private final JButton withdrawButton;
+    private final JButton depositBtn, withdrawBtn, checkBtn;
     private final SavingsAccount account;
 
     public Menu(SavingsAccount account) {
         this.account = account;
 
         setTitle("ATM Menu");
-        setSize(420, 250);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(400, 250);
         setLayout(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JLabel amountLabel = new JLabel("Enter Amount:");
-        amountLabel.setBounds(50, 30, 120, 30);
-        add(amountLabel);
+        JLabel amtLabel = new JLabel("Enter Amount:");
+        amtLabel.setBounds(70, 30, 120, 30);
+        add(amtLabel);
 
         amountField = new JTextField();
-        amountField.setBounds(180, 30, 150, 30);
+        amountField.setBounds(170, 30, 150, 30);
         add(amountField);
 
-        depositButton = new JButton("Deposit $");
-        depositButton.setBounds(40, 90, 140, 30);
-        depositButton.addActionListener(this);
-        add(depositButton);
+        depositBtn = new JButton("Deposit");
+        depositBtn.setBounds(40, 90, 140, 30);
+        depositBtn.addActionListener(this);
+        add(depositBtn);
 
-        withdrawButton = new JButton("Withdraw $");
-        withdrawButton.setBounds(210, 90, 140, 30);
-        withdrawButton.addActionListener(this);
-        add(withdrawButton);
+        withdrawBtn = new JButton("Withdraw");
+        withdrawBtn.setBounds(210, 90, 140, 30);
+        withdrawBtn.addActionListener(this);
+        add(withdrawBtn);
 
-        checkButton = new JButton("Check Balance");
-        checkButton.setBounds(120, 150, 160, 30);
-        checkButton.addActionListener(this);
-        add(checkButton);
+        checkBtn = new JButton("Check Balance");
+        checkBtn.setBounds(120, 150, 160, 30);
+        checkBtn.addActionListener(this);
+        add(checkBtn);
 
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            if (e.getSource() == checkButton) {
-                account.checkBalance();
-                return;
-            }
+        String amtText = amountField.getText().trim();
 
-            String amtText = amountField.getText().trim();
+        if (e.getSource() == checkBtn) {
+            account.checkBalance();
+            return;
+        }
+
+        if (amtText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an amount.");
+            return;
+        }
+
+        try {
             int amount = Integer.parseInt(amtText);
 
-            if (amount <= 0) {
-                JOptionPane.showMessageDialog(this, "Amount must be positive.");
-                return;
-            }
-
-            if (e.getSource() == depositButton) {
+            if (e.getSource() == depositBtn) {
                 account.deposit(amount);
-            } else if (e.getSource() == withdrawButton) {
+            } else if (e.getSource() == withdrawBtn) {
                 account.withdraw(amount);
             }
-
-        } catch (InsufficientFundsException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Balance Error", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Enter a valid positive number!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid number format!", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
