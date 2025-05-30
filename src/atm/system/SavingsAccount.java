@@ -20,17 +20,7 @@ public class SavingsAccount extends Account implements ATMOperations {
     public void checkBalance() {
         JOptionPane.showMessageDialog(null, "Current Balance: $" + balance);
     }
-
-    @Override
-    public void deposit(int amount) {
-        if (amount <= 0) {
-            JOptionPane.showMessageDialog(null, "Deposit amount must be positive!", "Input Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        balance += amount;
-        JOptionPane.showMessageDialog(null, "Deposited $" + amount);
-    }
-
+    
     @Override
     public void withdraw(int amount) {
         if (amount <= 0) {
@@ -46,4 +36,15 @@ public class SavingsAccount extends Account implements ATMOperations {
         balance -= amount;
         JOptionPane.showMessageDialog(null, "Withdrawn $" + amount);
     }
+
+    @Override
+    public void deposit(int amount) {
+        if (amount <= 0) {
+            JOptionPane.showMessageDialog(null, "Deposit amount must be positive!", "Input Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        balance += amount;
+        JOptionPane.showMessageDialog(null, "Deposited $" + amount);
+    }
+   
 }
